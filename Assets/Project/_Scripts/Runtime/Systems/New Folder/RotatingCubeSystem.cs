@@ -20,9 +20,10 @@ public partial struct RotatingCubeSystem : ISystem
         {
             DeltaTime = deltaTime
         };
-        job.ScheduleParallel();
+        state.Dependency = job.ScheduleParallel(state.Dependency);
     }
     
+    [BurstCompile]
     public partial struct RotatingCubeJob : IJobEntity
     {
         public float DeltaTime;
