@@ -1,0 +1,61 @@
+# CodeRabbit Configuration - 3XKO Project
+
+version 1
+
+# Règles générales de review
+rules
+  max_function_length 60            # Fonctions courtes (NASA Rule 4)
+  max_nesting_depth 3               # Évite la complexité cyclomatique excessive
+  max_parameters_per_function 3     # Limite de paramètres par méthode
+  require_variable_scoping true     # Scope minimal pour les variables
+  require_return_value_check true   # Toujours vérifier les valeurs de retour
+  disallow_goto true                 # Flux de contrôle simple
+  disallow_dynamic_allocation_in_update true # Pas d'allocations runtime critiques
+  require_assertions_in_critical true # Assertions pour les méthodes critiques
+  warnings_as_errors true            # Zéro warning accepté
+
+# Conventions de nommage
+naming
+  class PascalCase
+  method PascalCase
+  private_field _camelCase
+  local_variable camelCase
+  constant ALL_CAPS
+
+# Analyse UnityECS
+unity
+  disallow_logic_in_mono_behaviours true  # Pas de logique critique dans MonoBehaviours
+  ecs
+    require_pure_components true          # IComponentData = data pur
+    disallow_object_references_in_ecs true # Pas de ref UnityEngine.Object dans ECS data
+    systems_named_with_suffix System      # Convention nommage ECS
+    ghost_components_only_for_network true # Ghost uniquement pour data réseau utile
+
+# Suggestions de refactor
+refactor_suggestions
+  - Fonction trop longue  découper en sous-fonctions.
+  - Trop de paramètres  utiliser un structdata object.
+  - Boucle non bornée  ajouter un compteur de sécurité.
+  - Allocation runtime détectée  envisager un pooling.
+  - Nom de variable peu clair  respecter la convention.
+
+# Niveau de sévérité
+severity
+  style_issues warning
+  maintainability_issues error
+  performance_issues error
+  security_issues error
+
+# Fichiers ignorés
+ignore
+  - Art
+  - Prefabs
+  - Scenes
+  - ThirdParty
+  - Tests
+
+# Messages personnalisés
+messages
+  welcome 🚀 CodeRabbit prêt.
+  closing ✅ Review terminée, tié un tigre.
+
