@@ -19,7 +19,7 @@ public partial struct RotatingCubeSystem : ISystem
         {
             DeltaTime = deltaTime
         };
-        job.ScheduleParallel();
+        state.Dependency = job.ScheduleParallel(state.Dependency);
     }
     
     public partial struct RotatingCubeJob : IJobEntity
