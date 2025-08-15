@@ -1,3 +1,4 @@
+using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -15,10 +16,21 @@ public partial struct RotatingCubeSystem : ISystem
     {
         float deltaTime = SystemAPI.Time.DeltaTime;
         
-        foreach ((RefRW<LocalTransform> localTransform, RefRO<RotateSpeed> rotateSpeed) in SystemAPI
-                     .Query<RefRW<LocalTransform>, RefRO<RotateSpeed>>())
+        var job = new RotatingCubeJob
         {
-           localTransform.ValueRW = localTransform.ValueRW.RotateY(rotateSpeed.ValueRO.Value * deltaTime);
+            DeltaTime = deltaTime
+        };
+        state.Dependency = job.ScheduleParallel(state.Dependency);
+    }
+    
+    [BurstCompile]
+    public partial struct RotatingCubeJob : IJobEntity
+    {
+        public float DeltaTime;
+
+        public void Execute(ref LocalTransform localTransform, in RotateSpeed rotateSpeed)
+        {
+            localTransform = localTransform.RotateY(rotateSpeed.Value * DeltaTime);
         }
     }
 }
