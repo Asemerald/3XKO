@@ -1,13 +1,14 @@
 # coderabbit.yml
 version: 1
 
-# Branches principales à surveiller
 branches:
   - develop
 
-# Déclencheurs : Pull Requests vers develop
 triggers:
   pull_request:
     target: develop
     branches:
       - "features/*"
+
+reviews:
+  review_status: true   
