@@ -11,4 +11,4 @@ triggers:
       - "features/*"
 
 reviews:
-  review_status: true   
+  review_status: true   # Auto review pr on developp
