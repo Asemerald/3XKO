@@ -1,0 +1,14 @@
+# coderabbit.yml
+version: 1
+
+branches:
+  - develop
+
+triggers:
+  pull_request:
+    target: develop
+    branches:
+      - "features/*"
+
+reviews:
+  review_status: true   
